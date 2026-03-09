@@ -146,20 +146,6 @@ Ref<AudioEffectInstance> AudioEffectConvolutionReverb::_instantiate() {
 	Ref<AudioEffectConvolutionReverbInstance> ins;
 	ins.instantiate();
 	ins->base = Ref<AudioEffectConvolutionReverb>(this);
-	// ins->bufferLeft.resize( FFT_DATA );
-	// ins->bufferLeft.assign( FFT_DATA, 0.0f );
-	// ins->bufferRight.resize( FFT_DATA );
-	// ins->bufferRight.assign( FFT_DATA, 0.0f );
-	// ins->sourceLeft.resize( FFT_DATA );
-	// ins->sourceLeft.assign( FFT_DATA, 0.0f );
-	// ins->sourceRight.resize( FFT_DATA );
-	// ins->sourceRight.assign( FFT_DATA, 0.0f );
-	// ins->outputLeft.resize( FFT_DATA );
-	// ins->outputRight.resize( FFT_DATA );
-	// ins->overlapLeft.resize(FFT_SIZE);
-	// ins->overlapLeft.assign(FFT_SIZE, 0.0f);
-	// ins->overlapRight.resize(FFT_SIZE);
-	// ins->overlapRight.assign(FFT_SIZE, 0.0f);
 	return ins;
 }
 
@@ -236,4 +222,5 @@ void AudioEffectConvolutionReverb::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Mix", PROPERTY_HINT_RANGE, "0,1,0.001"), "SetMix", "GetMix");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "Gain", PROPERTY_HINT_RANGE, "0,2,0.001"), "SetGain", "GetGain");	
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "UseAVX"), "SetUseAVX", "GetUseAVX");
+
 }

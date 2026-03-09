@@ -61,7 +61,7 @@ namespace godot{
 		float mix = 1.0f;
 		float gain = 1.0f;
 		bool useAVX = false;
-		ComplexMulFn complexMulAccumulate;
+		ComplexMulFn complexMulAccumulate = ComplexMultiplyAccumulate;
 		static void _bind_methods();
 
 	public:
@@ -76,4 +76,5 @@ namespace godot{
 		float GetGain() const;
 		float GetProcessTime() const;
 	};
+
 }

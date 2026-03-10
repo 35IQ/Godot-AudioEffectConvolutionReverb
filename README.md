@@ -6,3 +6,4 @@ There are a some normalization related bug in the code, but I'm too tired of thi
 There may be some other bugs, but I'm just a technical artist.
 
 Maybe it's working completely wrong. I haven't compare it to sound engines.
+https://youtu.be/XQkq42PAnC4 demo is here

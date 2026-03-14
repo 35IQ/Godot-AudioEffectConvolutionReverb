@@ -248,5 +248,4 @@ void AudioEffectConvolutionReverb::_bind_methods() {
 	ADD_PROPERTY( PropertyInfo( Variant::STRING, "ImpulsePath", PROPERTY_HINT_FILE, "*.wav" ), "SetImpulseResponsePath", "GetImpulseResponsePath" );
 	ADD_PROPERTY( PropertyInfo( Variant::FLOAT, "Mix", PROPERTY_HINT_RANGE, "0,1,0.001" ), "SetMix", "GetMix" );
 	ADD_PROPERTY( PropertyInfo( Variant::FLOAT, "Gain", PROPERTY_HINT_RANGE, "0,2,0.001" ), "SetGain", "GetGain" );	
-	ADD_PROPERTY( PropertyInfo( Variant::BOOL,  "Test" ), "SetTest", "GetTest" );
 }

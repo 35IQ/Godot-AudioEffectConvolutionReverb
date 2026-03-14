@@ -4,28 +4,28 @@
 void iqFFT::SetUpFFT( int fftFrameSize ) {
 	if ( fftFrameSize == complexSize ) { return; } 
 	complexSize = fftFrameSize; 
-	stages = ctz32(complexSize); 
+	stages = ctz32( complexSize ); 
 	N = complexSize * 2;
 
 // Precompute twiddle factors 
-	twiddleFactors.resize(complexSize); 
-	for (int i = 0; i < complexSize / 2; i++) { 
+	twiddleFactors.resize( complexSize ); 
+	for ( int i = 0; i < complexSize / 2; i++ ) { 
 		float angle = 2.0f * Math_PI * i / complexSize; 
-		float wtemp = sinf(0.5f * angle); 
-		twiddleFactors[2 * i + 0] = cosf(angle) - 1.0f; // real part - 1 
-		twiddleFactors[2 * i + 1] = sinf(angle); // imaginary part 
+		float wtemp = sinf( 0.5f * angle ); 
+		twiddleFactors[2 * i + 0] = cosf( angle ) - 1.0f; // real part - 1 
+		twiddleFactors[2 * i + 1] = sinf( angle ); // imaginary part 
 	}
 	
 	// Precompute bitrev swaps for optimized FFT	
 	int n = complexSize;
 	std::vector<int> bitrev;
-	bitrev.resize(N); 
+	bitrev.resize( N ); 
 	int j = 0;
-	for (int i = 0; i < n; i++) {
+	for ( int i = 0; i < n; i++ ) {
 		int rev = 0;
 		int x = i;
-		for (int k = 0; (1 << k) < n; k++) {
-			rev = (rev << 1) | (x & 1);
+		for ( int k = 0; (1 << k) < n; k++ ) {
+			rev = ( rev <<  1 ) | ( x & 1 );
 			x >>= 1;
 		}
 			bitrev[i*2] = rev*2;     // real
@@ -33,10 +33,10 @@ void iqFFT::SetUpFFT( int fftFrameSize ) {
 	}	
 	
 	bitrevSwaps.clear();
-	for (int i = 0; i < n; i++) {
+	for ( int i = 0; i < n; i++ ) {
 		int rev = bitrev[i*2]; // real index
-		if (i < rev/2) {
-			bitrevSwaps.emplace_back(i*2, rev); 
+		if ( i < rev/2 ) {
+			bitrevSwaps.emplace_back( i * 2, rev ); 
 		}
 	}
 }	 

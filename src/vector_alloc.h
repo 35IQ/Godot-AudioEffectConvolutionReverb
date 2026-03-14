@@ -15,34 +15,34 @@ struct AlignedAllocator {
     AlignedAllocator() noexcept = default;
     
     template <typename U>
-    AlignedAllocator(const AlignedAllocator<U, Alignment>&) noexcept {}
+    AlignedAllocator( const AlignedAllocator<U, Alignment>& ) noexcept {}
 
-    T* allocate(std::size_t n) {
+    T* allocate( std::size_t n ) {
         void* ptr = nullptr;
-#if defined(_MSC_VER)
-        ptr = _aligned_malloc(n * sizeof(T), Alignment);
-        if (!ptr) throw std::bad_alloc();
+#if defined( _MSC_VER )
+        ptr = _aligned_malloc( n * sizeof(T), Alignment );
+        if ( !ptr ) throw std::bad_alloc();
 #else
-        if (posix_memalign(&ptr, Alignment, n * sizeof(T))) throw std::bad_alloc();
+        if ( posix_memalign( &ptr, Alignment, n * sizeof( T ) ) ) throw std::bad_alloc();
 #endif
-        return reinterpret_cast<T*>(ptr);
+        return reinterpret_cast<T*>( ptr );
     }
 
-    void deallocate(T* p, std::size_t) {
-#if defined(_MSC_VER)
-        _aligned_free(p);
+    void deallocate( T* p, std::size_t ) {
+#if defined( _MSC_VER )
+        _aligned_free( p );
 #else
-        free(p);
+        free( p );
 #endif
     }
 };
 
 template <typename T, typename U, size_t Alignment>
-bool operator==(const AlignedAllocator<T, Alignment>&, const AlignedAllocator<U, Alignment>&) noexcept { 
+bool operator==( const AlignedAllocator<T, Alignment>&, const AlignedAllocator<U, Alignment>& ) noexcept { 
     return true; 
 }
 
 template <typename T, typename U, size_t Alignment>
-bool operator!=(const AlignedAllocator<T, Alignment>&, const AlignedAllocator<U, Alignment>&) noexcept { 
+bool operator!=( const AlignedAllocator<T, Alignment>&, const AlignedAllocator<U, Alignment>& ) noexcept { 
     return false; 
 }

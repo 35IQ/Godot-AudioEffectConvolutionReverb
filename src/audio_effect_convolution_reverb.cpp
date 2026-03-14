@@ -44,8 +44,8 @@ void AudioEffectConvolutionReverbInstance::_process( const AudioFrame *pSrcFrame
 	auto accL = accumulators[currentAccum].left.data();
 	auto accR = accumulators[currentAccum].right.data();
 
-	ComplexMultiplyFirstPartition( sigL, impL, accL, fftSize);
-	ComplexMultiplyFirstPartition( sigR, impR, accR, fftSize);
+	ComplexMultiplyFirstPartition( sigL, impL, accL, fftSize );
+	ComplexMultiplyFirstPartition( sigR, impR, accR, fftSize );
 
 	// convolution sum
 	for ( int p = 1; p < partitionCount; p++ ) {
@@ -70,7 +70,7 @@ void AudioEffectConvolutionReverbInstance::_process( const AudioFrame *pSrcFrame
 	for ( i = 0; i < blockSize; i++ ) {
 		const int idx = i*2;	
 		const int idx2 = idx + complexLength;
-		const float outL = ( accL[idx] + prevAccL[idx2]  ) * invFFT * base->gain;
+		const float outL = ( accL[idx] + prevAccL[idx2] ) * invFFT * base->gain;
 		const float outR = ( accR[idx] + prevAccR[idx2] ) * invFFT * base->gain;
 		pDstFrames[i].left  = pSrcFrames[i].left  * base->dry + outL * base->wet;
 		pDstFrames[i].right = pSrcFrames[i].right * base->dry + outR * base->wet;
@@ -83,7 +83,7 @@ void AudioEffectConvolutionReverbInstance::_process( const AudioFrame *pSrcFrame
 	return;
 }
 
-bool AudioEffectConvolutionReverbInstance::SetImpulseResponse(const int pFrameCount){
+bool AudioEffectConvolutionReverbInstance::SetImpulseResponse( const int pFrameCount ){
 	if (!base.is_valid() || !base->impulse.is_valid()) {
 		print_error("Impulse response = NULL");
 		return false;
@@ -99,15 +99,15 @@ bool AudioEffectConvolutionReverbInstance::SetImpulseResponse(const int pFrameCo
 
 	std::vector<float> impulseLeft;
 	std::vector<float> impulseRight;
-	if (base->impulse.ptr()->get_format() == AudioStreamWAV::FORMAT_8_BITS) {
+	if ( base->impulse.ptr()->get_format() == AudioStreamWAV::FORMAT_8_BITS ) {
 		for (int i = 0; i < pcmSize ; i += 2){
-			impulseLeft.push_back (float(pcm.decode_s8(i) 	 ) / 128.0f);
-			impulseRight.push_back(float(pcm.decode_s8(i + 1)) / 128.0f);
+			impulseLeft.push_back ( float( pcm.decode_s8( i ) 	 ) / 128.0f );
+			impulseRight.push_back( float( pcm.decode_s8( i + 1 ) ) / 128.0f );
 		}
 	} else if(base->impulse.ptr()->get_format() == AudioStreamWAV::FORMAT_16_BITS){
 		for (int i = 0; i < pcmSize ; i += 4){
-			impulseLeft.push_back (float(pcm.decode_s16(i) 	  ) / 32768.0f);
-			impulseRight.push_back(float(pcm.decode_s16(i + 2)) / 32768.0f);
+			impulseLeft.push_back ( float( pcm.decode_s16( i ) 	  ) / 32768.0f );
+			impulseRight.push_back( float( pcm.decode_s16( i + 2 ) ) / 32768.0f );
 		}
 	} else {
 		print_error("Unsupported audio format for impulse response. Only 8-bit and 16-bit PCM WAV files are supported.");

@@ -12,13 +12,13 @@
 #define Math_PI 3.14159265358979323846f
 #endif
 
-inline int ctz32(unsigned int x) {
-#if defined(_MSC_VER)
+inline int ctz32( unsigned int x ) {
+#if defined( _MSC_VER ) 
     unsigned long idx = 0;
-    _BitScanForward(&idx, x); // x must be non-zero
-    return static_cast<int>(idx);
+    _BitScanForward( &idx, x ); // x must be non-zero
+    return static_cast<int>( idx );
 #else
-    return __builtin_ctz(x);  // x must be non-zero
+    return __builtin_ctz( x );  // x must be non-zero
 #endif
 }
 

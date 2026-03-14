@@ -9,7 +9,6 @@
 #define Math_PI_2 1.5707963267948966192313216916398
 #include "fft.h"
 #include "vector_alloc.h"
-#include "fft_functions.h"
 
 struct Buffer{
 	std::vector<float, AlignedAllocator<float, 32>> left;
@@ -83,26 +82,7 @@ namespace godot{
 		bool GetTest() const { return test; }
 		void SetTest(bool pTest) {
 			test = pTest;
-			// ctz32(1024); 
-			// if ( !test ) return;
 			print_line("CTZ: " + String::num(ctz32(1024)) );
-			// float testBuffer[8] = { 1.0, 0.0, 0.0, 4.0, 0.0, 0.0, 23.0, 0.0 };
-			// iqAudioSignalComplex testReal;
-			// testReal.real = { 1.0f, 0.0f, 0.0f, 23.0f };
-			// testReal.imag = { 0.0f, 4.0f, 0.0f, 0.0f };
-			// smbFft(testBuffer, 4, 1);
-			// // fft.useOldFFT();
-			// fft.run(&testReal, 4, 1);
-
-			// print_line("aos FFT output:");
-			// for ( int i = 0; i < 8; i += 2) {
-			// 	print_line("Real: " + String::num(testBuffer[i]) + " Imag: " + String::num(testBuffer[i + 1]));
-			// }
-			// print_line("soa FFT output:");
-			// for (int i = 0; i < 4; i++) {
-			// 	print_line("Real: " + String::num(testReal.real[i]) + " Imag: " + String::num(testReal.imag[i]));
-			// }
-			
 		}
 		
 		float GetProcessTime() const { return time; }

@@ -5,8 +5,7 @@
 #endif
 #include <cmath>
 #include <vector>
-
-#include "signal.h"
+#include "vector_alloc.h"
 //Class for FFT, adapted from the original code by Stefan Bernsee (smb) with optimizations and modifications for this project.
 
 #ifndef Math_PI
@@ -29,9 +28,9 @@ class iqFFT {
 		std::vector<float, AlignedAllocator<float, 32>> twiddleFactors;	
 		std::vector<std::pair<int,int>> bitrevSwaps;
 
-		int complexSize =-1; //1024
-		int N;//2048
-		int stages;//10
+		int complexSize =-1; 
+		int N;
+		int stages;
 
 	public:
 		//constructor
@@ -41,6 +40,5 @@ class iqFFT {
 		~iqFFT() = default;
 		void SetUpFFT( int pComplexSize );
 		void FFT( float* fftBuffer, const int sign );
-		void smbFft( float* fftBuffer, long fftFrameSize, int sign );
 };	
 

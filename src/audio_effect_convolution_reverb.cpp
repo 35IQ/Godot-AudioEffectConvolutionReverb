@@ -2,6 +2,7 @@
 #include <godot_cpp/classes/time.hpp>
 #include "audio_effect_convolution_reverb.h"
 #include <functional>
+#include <immintrin.h>
 
 using namespace godot;
 

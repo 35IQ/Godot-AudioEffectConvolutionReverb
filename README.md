@@ -1,6 +1,6 @@
 gdextension of ConvolutionReverb audio effect for Godot Engine.
 
-Nothing to add just an effect) it uses fft and simd for optimisation.
+Nothing to add just an effect) it uses partition fft and avx simd for optimisation.
 
 https://youtu.be/XQkq42PAnC4 demo is here
 

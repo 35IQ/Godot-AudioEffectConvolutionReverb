@@ -8,4 +8,4 @@ There may be some other bugs, but I'm just a technical artist.
 Maybe it's working completely wrong. I haven't compare it to sound engines.
 https://youtu.be/XQkq42PAnC4 demo is here
 
-https://github.com/35IQ/Godot-AudioEffectConvolutionReverb/releases/tag/0.01a
+https://github.com/35IQ/Godot-AudioEffectConvolutionReverb/releases/download/v0.1a/AudioEffectConvolutionReverb.zip

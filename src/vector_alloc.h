@@ -1,11 +1,6 @@
 #pragma once
-<<<<<<< HEAD
 
 #include <memory>
-=======
-#include <memory>
-
->>>>>>> f4ff7c7e760ef902c0dd87dabebf1cf6bef0a404
 template <typename T, size_t Alignment>
 struct AlignedAllocator {
     using value_type = T;

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #pragma once
 #include <cmath>
 #include <immintrin.h>
@@ -337,4 +338,108 @@ __forceinline void ComplexMultiplyAccumulateAVX(
         ar_ptr[i] += xr*hr - xi*hi;
         ai_ptr[i] += xr*hi + xi*hr;
     }
+=======
+#pragma once
+#include <cmath>
+#include <immintrin.h>
+
+
+inline void smbFft(float *fftBuffer, long fftFrameSize, long sign)
+/*
+	FFT routine, (C)1996 S.M.Bernsee. Sign = -1 is FFT, 1 is iFFT (inverse)
+	Fills fftBuffer[0...2*fftFrameSize-1] with the Fourier transform of the
+	time domain data in fftBuffer[0...2*fftFrameSize-1]. The FFT array takes
+	and returns the cosine and sine parts in an interleaved manner, ie.
+	fftBuffer[0] = cosPart[0], fftBuffer[1] = sinPart[0], asf. fftFrameSize
+	must be a power of 2. It expects a complex input signal (see footnote 2),
+	ie. when working with 'common' audio signals our input signal has to be
+	passed as {in[0],0.,in[1],0.,in[2],0.,...} asf. In that case, the transform
+	of the frequencies of interest is in fftBuffer[0...fftFrameSize].
+*/
+{
+	float wr, wi, arg, *p1, *p2, temp;
+	float tr, ti, ur, ui, *p1r, *p1i, *p2r, *p2i;
+	long i, bitm, j, le, le2, k;
+
+	for (i = 2; i < 2 * fftFrameSize - 2; i += 2) {
+		for (bitm = 2, j = 0; bitm < 2 * fftFrameSize; bitm <<= 1) {
+			if (i & bitm) {
+				j++;
+			}
+			j <<= 1;
+		}
+		if (i < j) {
+			p1 = fftBuffer + i;
+			p2 = fftBuffer + j;
+			temp = *p1;
+			*(p1++) = *p2;
+			*(p2++) = temp;
+			temp = *p1;
+			*p1 = *p2;
+			*p2 = temp;
+		}
+	}
+	for (k = 0, le = 2; k < (long)(log((double)fftFrameSize) / log(2.) + .5); k++) {
+		le <<= 1;
+		le2 = le >> 1;
+		ur = 1.0;
+		ui = 0.0;
+		arg = Math_PI / (le2 >> 1);
+		wr = cos(arg);
+		wi = sign * sin(arg);
+		for (j = 0; j < le2; j += 2) {
+			p1r = fftBuffer + j;
+			p1i = p1r + 1;
+			p2r = p1r + le2;
+			p2i = p2r + 1;
+			for (i = j; i < 2 * fftFrameSize; i += le) {
+				tr = *p2r * ur - *p2i * ui;
+				ti = *p2r * ui + *p2i * ur;
+				*p2r = *p1r - tr;
+				*p2i = *p1i - ti;
+				*p1r += tr;
+				*p1i += ti;
+				p1r += le;
+				p1i += le;
+				p2r += le;
+				p2i += le;
+			}
+			tr = ur * wr - ui * wi;
+			ui = ur * wi + ui * wr;
+			ur = tr;
+		}
+	}
+}
+
+inline void ComplexMultiplyAccumulateAVX( const float* Xi, const float* Hi, float* accum, int fftDataSize){
+	int simdEnd = (fftDataSize / 8) * 8;
+    for (int i = 0; i < simdEnd; i += 8) {
+		__m256 x = _mm256_load_ps(Xi + i);
+		__m256 h = _mm256_load_ps(Hi + i);
+		__m256 xr = _mm256_moveldup_ps(x);
+		__m256 xi = _mm256_movehdup_ps(x);
+		__m256 h_sw = _mm256_shuffle_ps(h, h, 0xB1);
+		__m256 t1 = _mm256_mul_ps(xr, h); 
+		__m256 t2 = _mm256_mul_ps(xi, h_sw);
+		__m256 result = _mm256_addsub_ps(t1, t2);
+		__m256 acc = _mm256_load_ps(accum + i);
+		acc = _mm256_add_ps(acc, result);
+		_mm256_store_ps(accum + i, acc);
+	}
+	for (int i = simdEnd; i < fftDataSize; i += 2){
+        float r = Xi[i]*Hi[i] - Xi[i+1]*Hi[i+1];
+        float im = Xi[i]*Hi[i+1] + Xi[i+1]*Hi[i];
+        accum[i] += r;
+        accum[i+1] += im;
+    }
+}
+
+inline void ComplexMultiplyAccumulate(const float* Xi, const float* Hi, float* accum, int fftDataSize){
+		for (int i = 0; i < fftDataSize; i += 2) {
+			float r = Xi[i] * Hi[i] - Xi[i+1] * Hi[i+1];
+			float im = Xi[i] * Hi[i+1] + Xi[i+1] * Hi[i];
+			accum[i] += r;
+			accum[i+1] += im;
+		}
+>>>>>>> f4ff7c7e760ef902c0dd87dabebf1cf6bef0a404
 }

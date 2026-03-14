@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "audio_effect_convolution_reverb_module_init"
+compatibility_minimum = "4.1"
+reloadable = true
+
+[libraries]
+windows.debug.x86_64 = "res://bin/AudioEffectConvolutionReverb.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "AudioEffectConvolutionReverb.windows.template_release.x86_64.dll"

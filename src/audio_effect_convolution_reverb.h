@@ -78,12 +78,6 @@ namespace godot{
 
 		float GetGain() const { return gain; }
 		void SetGain( float pGain ) { gain = pGain; }
-	
-		bool GetTest() const { return test; }
-		void SetTest(bool pTest) {
-			test = pTest;
-			print_line("CTZ: " + String::num(ctz32(1024)) );
-		}
 		
 		float GetProcessTime() const { return time; }
 	};

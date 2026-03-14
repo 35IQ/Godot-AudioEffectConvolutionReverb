@@ -243,10 +243,7 @@ void AudioEffectConvolutionReverb::_bind_methods() {
 	ClassDB::bind_method( D_METHOD( "SetGain", "gain" ), &AudioEffectConvolutionReverb::SetGain );
 	ClassDB::bind_method( D_METHOD( "GetGain" ), 		 &AudioEffectConvolutionReverb::GetGain );
  
-	ClassDB::bind_method( D_METHOD( "GetTest" ), 		 &AudioEffectConvolutionReverb::GetTest );
-	ClassDB::bind_method( D_METHOD( "SetTest", "test" ), &AudioEffectConvolutionReverb::SetTest );
-	 
-	ClassDB::bind_method( D_METHOD( "GetProcessTime" ),  &AudioEffectConvolutionReverb::GetProcessTime );
+ 	ClassDB::bind_method( D_METHOD( "GetProcessTime" ),  &AudioEffectConvolutionReverb::GetProcessTime );
 
 	ADD_PROPERTY( PropertyInfo( Variant::STRING, "ImpulsePath", PROPERTY_HINT_FILE, "*.wav" ), "SetImpulseResponsePath", "GetImpulseResponsePath" );
 	ADD_PROPERTY( PropertyInfo( Variant::FLOAT, "Mix", PROPERTY_HINT_RANGE, "0,1,0.001" ), "SetMix", "GetMix" );
